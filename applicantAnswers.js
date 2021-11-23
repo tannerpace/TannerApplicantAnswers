@@ -10,7 +10,7 @@ const {
  *      The color should be orange, have an id of 5, and primary should be false
  */
 const test1 = () => {
-  addToDb({ id: 5, color: "orange", primary: false }).then(res => res);
+  return addToDb({ id: 5, color: "orange", primary: false });
 };
 
 /**  TODO: Test 2 - return the color of the item with id of 3
@@ -20,7 +20,9 @@ const test1 = () => {
  * 2. return the list of colors of matching items (Hint the answer would be ["green"])
  */
 const test2 = () => {
-  selectWhere("id", 3).then(res => res.forEach(color => color.color));
+  let results = []
+  selectWhere("id", 3).then(res => res.forEach(color => results.push(color.color)));
+  return results;
 };
 
 /**TODO: Test 3 - Return multiple items with selectWhere util
@@ -28,7 +30,9 @@ const test2 = () => {
  * 2. return only the ids of these items (Hint, the answer would return [1,2])
  */
 const test3 = () => {
-  selectWhere("primary", true).then(res => res.map(color => color.id));
+  let results = []
+  selectWhere("primary", true).then(res => res.map(color => results.push(color.id)));
+  return results;
 };
 
 /**TODO: Test 4 - Test multiple asynchronous steps
@@ -37,9 +41,7 @@ const test3 = () => {
  * 3. Return only the color value from the database. In this case, the function would return "brown"
  */
 const test4 = () => {
-  addToDb({ id: 8, color: "brown", primary: false }).then(res => {
-    selectWhere("id", res).then(res => res.forEach(color => color.color));
-  });
+  return addToDb({ id: 8, color: "brown", primary: false }).then(res => selectWhere("id", 8).then(res => res[0].color));
 };
 
 /**TODO: Bonus - Handle unpredictable promises
