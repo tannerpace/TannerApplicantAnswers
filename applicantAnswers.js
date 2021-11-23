@@ -59,10 +59,12 @@ const test4 = () => {
 
 const bonusTest = async () => {
   let count = 0;
-  while (await unpredictableApiResponse()) {
+  let result = true
+  while (result) {
     count++;
+    result = await unpredictableApiResponse();
   }
   return count;
-}
+};
 
 module.exports = { test1, test2, test3, test4, bonusTest };
